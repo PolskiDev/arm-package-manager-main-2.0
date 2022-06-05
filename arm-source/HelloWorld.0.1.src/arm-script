@@ -1,0 +1,26 @@
+#!/bin/python3
+# arm-pkg install HelloWorld.0.1.amd64.arm
+# arm-pkg -gen HelloWorld
+
+import os
+import sys
+
+__ARGS=sys.argv #Start at ARGS[1] => HelloWorld
+
+from ARM.SPEC import *
+
+def install():
+	os.system(f"cd SOURCES && {MAKE_CMD}")
+def uninstall():
+	os.system(f"cd SOURCES && {REMOVE_CMD}")
+
+
+
+if __ARGS[1] == "uninstall" or __ARGS[1] == "-u" or __ARGS[1] == "remove":
+	uninstall()
+elif __ARGS[1] == "install" or __ARGS[1] == "-i":
+	install()
+
+
+
+

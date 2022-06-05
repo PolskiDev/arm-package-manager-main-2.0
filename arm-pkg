@@ -1,0 +1,168 @@
+#!/bin/ruby
+
+# (arm-pkg Application File) => HelloWorld.0.1.amd64#{EXTENSION}
+
+# ** Long syntax ** #
+# arm-pkg install HelloWorld.0.1.amd64
+# arm-pkg uninstall HelloWorld.0.1.amd64
+
+
+# ~ Don't ask for confirmation ~ #
+# arm-pkg install-confirm HelloWorld.0.1.amd64
+# arm-pkg uninstall-confirm HelloWorld.0.1.amd64
+
+
+
+# ** Short syntax ** #
+# arm-pkg -i HelloWorld.0.1.amd64
+# arm-pkg -u HelloWorld.0.1.amd64
+
+# ~ Don't ask for confirmation ~ #
+# arm-pkg -ic HelloWorld.0.1.amd64
+# arm-pkg -uc HelloWorld.0.1.amd64
+
+
+
+
+# (Sources folder/directory) => HelloWorld.0.1.amd64
+# ~ Don't ask for confirmation ~ #
+
+# ** Long syntax ** #
+# arm-pkg generate-arm HelloWorld.0.1.amd64
+
+
+# ** Short syntax ** #
+# arm-pkg -gen HelloWorld.0.1.amd64
+
+
+
+
+# (DEB Application File) => helloworld_0.1_amd64.deb
+
+# ** Long syntax ** #
+# sudo alien --to-rpm helloworld_0.1_amd64.deb
+# arm-pkg install hello-world-0.1.amd64.rpm --redhat
+
+
+# ** Short syntax ** #
+# sudo alien -r helloworld_0.1_amd64.deb
+# arm-pkg install hello-world-0.1.amd64.rpm --redhat
+
+
+
+
+# (RPM Application File) => hello-world-0.1.amd64.rpm
+
+# ** Long syntax ** #
+# arm-pkg install hello-world-0.1.amd64.rpm --redhat
+# arm-pkg uninstall hello-world-0.1.amd64.rpm --redhat
+
+
+# ~ Don't ask for confirmation ~ #
+# arm-pkg install-confirm hello-world-0.1.amd64.rpm --redhat
+# arm-pkg uninstall-confirm hello-world-0.1.amd64.rpm --redhat
+
+
+
+# ** Short syntax ** #
+# arm-pkg -i hello-world-0.1.amd64.rpm --redhat
+# arm-pkg -u hello-world-0.1.amd64.rpm --redhat
+
+# ~ Don't ask for confirmation ~ #
+# arm-pkg -ic hello-world-0.1.amd64.rpm --redhat
+# arm-pkg -uc hello-world-0.1.amd64.rpm --redhat
+
+
+EXTENSION=".arm"
+TOOL="arm-pkg"
+
+if ARGV[0] == "-gen" or ARGV[0] == "generate-arm"
+    puts "Building ARM package..."
+    system("tar -cvf #{ARGV[1]}#{EXTENSION} #{ARGV[1]}/")
+
+elsif ARGV[0] == "-src" or ARGV[0] == "new-source"
+    system("cp -Rfv /bin/arm-source/HelloWorld.0.1.opencli #{ARGV[1]}")
+
+elsif ARGV[0] == "-src-gui" or ARGV[0] == "new-gui-source"
+    system("cp -Rfv /bin/arm-source/HelloWorld.0.1.universal #{ARGV[1]}")
+
+    
+elsif ARGV[0] == "-i" or ARGV[0] == "install"
+    system("tar -xvf #{ARGV[1]}#{EXTENSION} && cd #{ARGV[1]} && sudo chmod +x arm-script && sudo ./arm-script install")
+
+elsif ARGV[0] == "-u" or ARGV[0] == "uninstall" or ARGV[1] == "remove"
+    system("tar -xvf #{ARGV[1]}#{EXTENSION} && cd #{ARGV[1]} && sudo chmod +x arm-script && sudo ./arm-script uninstall")
+
+
+else
+	puts("---------------------------------------------------------\n\n")
+
+    puts("**Manual page (Manpage)**")
+    puts("#{TOOL} help\n\n")
+
+    puts("**References**")
+    puts("<package> => HelloWorld.1.0.amd64\n\n")
+    
+    puts("---------------------------------------------------------\n\n")
+
+    puts("**Long syntax**\n\n")
+
+    puts(" ~ Install and Uninstall packages (#{TOOL}) ~")
+    puts("#{TOOL} install <package>")
+    puts("#{TOOL} uninstall <package>\n\n")
+
+    puts(" ~ Compress [#{EXTENSION}] package (#{TOOL}) ~")
+    puts("#{TOOL} generate-arm <package>\n\n")
+
+    puts(" ~ Generate new [#{EXTENSION}] source package (#{TOOL}) ~ ")
+    puts("#{TOOL} new-source <package_name>")
+    puts("#{TOOL} new-gui-source <package_name>\n\n")
+
+    puts("---------------------------------------------------------\n\n")
+
+    puts("**Short syntax**\n\n")
+
+    puts(" ~ Install and Uninstall packages (#{TOOL}) ~ ")
+    puts("#{TOOL} -i <package>")
+    puts("#{TOOL} -u <package>\n\n")
+    
+
+    puts(" ~ Compress [#{EXTENSION}] package (#{TOOL}) ~ ")
+    puts("#{TOOL} -gen <package>\n\n")
+
+    puts(" ~ Generate new [#{EXTENSION}] source package (#{TOOL}) ~ ")
+    puts("#{TOOL} -src <package_name>")
+    puts("#{TOOL} -src-gui <package_name>\n\n")
+    
+
+    puts("---------------------------------------------------------\n\n")
+    
+
+    puts("**Examples**")
+    puts("HelloWorld.1.0.amd64 => folder")
+    puts("HelloWorld.1.0.amd64#{EXTENSION} => #{TOOL} package file\n\n")
+    
+
+    puts("**Short syntax**")
+    puts("#{TOOL} -i HelloWorld.1.0.amd64")
+    puts("#{TOOL} -u HelloWorld.0.1.amd64\n")
+    
+    puts("#{TOOL} -gen HelloWorld.0.1.amd64")
+    puts("#{TOOL} -src HelloWorld.0.1.amd64\n\n")
+    
+    puts("---------------------------------------------------------\n\n")
+
+
+    puts("**Long syntax**")
+    puts("#{TOOL} install HelloWorld.1.0.amd64")
+    puts("#{TOOL} uninstall HelloWorld.0.1.amd64\n")
+    
+    puts("#{TOOL} install-confirm HelloWorld.1.0.amd64")
+    puts("#{TOOL} uninstall-confirm HelloWorld.0.1.amd64\n")
+    
+    puts("#{TOOL} generate-arm HelloWorld.0.1.amd64")
+    puts("#{TOOL} new-source HelloWorld.0.1.amd64")
+    puts("#{TOOL} new-gui-source HelloWorld.0.1.amd64\n\n\n")
+
+    puts("---------------------------------------------------------\n\n\n")
+end

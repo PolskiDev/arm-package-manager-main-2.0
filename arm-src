@@ -1,0 +1,106 @@
+#!/bin/ruby
+
+# (arm-pkg Application File) => HelloWorld.0.1.src.arm
+
+# ** Long syntax ** #
+# arm-pkg install HelloWorld.0.1.amd64
+# arm-pkg uninstall HelloWorld.0.1.amd64
+
+
+# ** Short syntax ** #
+# arm-pkg -i HelloWorld.0.1.amd64
+# arm-pkg -u HelloWorld.0.1.amd64
+
+
+# (Sources folder/directory) => HelloWorld.0.1.amd64
+# ** Long syntax ** #
+# arm-pkg generate-arm HelloWorld.0.1.amd64
+
+# ** Short syntax ** #
+# arm-pkg -gen HelloWorld.0.1.amd64
+
+
+SOURCE_EXTENSION=".src"
+EXTENSION=".arm"
+ARM_PKG_EXTENSION=".src.arm"
+TOOL="arm-src"
+
+if ARGV[0] == "-gen" or ARGV[0] == "generate-arm"
+    system("tar -cvf #{ARGV[1]}#{ARM_PKG_EXTENSION} #{ARGV[1]}")
+
+elsif ARGV[0] == "-src" or ARGV[0] == "new-source"
+    system("cp -Rf /bin/arm-source/HelloWorld.0.1.src #{ARGV[1]}")
+
+    
+# Issue here when installing
+elsif ARGV[0] == "-i" or ARGV[0] == "install"
+    # arm-pkg Package Manager
+    system("tar -xvf #{ARGV[1]}#{ARM_PKG_EXTENSION} && cd #{ARGV[1]} && sudo chmod +x arm-script && sudo ./arm-script install")
+
+
+elsif ARGV[0] == "-u" or ARGV[0] == "uninstall" or ARGV[1] == "remove"
+    # arm-pkg Package Manager
+    system("tar -xvf #{ARGV[1]}#{ARM_PKG_EXTENSION} && cd #{ARGV[1]} && sudo chmod +x arm-script && sudo ./arm-script uninstall")
+
+else#if ARGV[0] == "help"
+    # Help
+	puts("---------------------------------------------------------\n\n")
+
+    puts("**Manual page (Manpage)**")
+    puts("#{TOOL} help\n\n")
+
+    puts("**References**")
+    puts("<package> => HelloWorld.1.0")
+    puts("<file>    =>  HelloWorld.1.0.src.arm\n\n")
+    
+    puts("---------------------------------------------------------\n\n")
+
+    puts("**Long syntax**\n\n")
+    
+    puts(" ~ Install and Uninstall packages (#{TOOL}) ~")
+    puts("#{TOOL} install <package>")
+    puts("#{TOOL} uninstall <package>\n\n")
+
+    puts(" ~ Compress [#{ARM_PKG_EXTENSION}] package (#{TOOL}) ~")
+    puts("#{TOOL} generate-arm <package>\n\n")
+
+    puts(" ~ Generate new [#{ARM_PKG_EXTENSION}] source package (#{TOOL}) ~ ")
+    puts("#{TOOL} new-source <package_name>\n\n")
+
+    puts("---------------------------------------------------------\n\n")
+
+    puts("**Short syntax**")
+
+    puts(" ~ Install and Uninstall packages (#{TOOL}) ~ ")
+    puts("#{TOOL} -i <package>")
+    puts("#{TOOL} -u <package>\n\n")
+
+    puts(" ~ Compress [#{ARM_PKG_EXTENSION}] package (#{TOOL}) ~ ")
+    puts("#{TOOL} -gen <package>\n\n")
+
+    puts(" ~ Generate new [#{ARM_PKG_EXTENSION}] source package (#{TOOL}) ~ ")
+    puts("#{TOOL} -src <package>\n\n")
+    
+
+    puts("---------------------------------------------------------\n\n")
+    
+    puts("**Short syntax**")
+    puts("#{TOOL} -i HelloWorld.0.1")
+    puts("#{TOOL} -u HelloWorld.0.1\n")
+    
+    puts("#{TOOL} -gen HelloWorld.0.1")
+    puts("#{TOOL} -src HelloWorld.0.1\n\n")
+    
+
+    puts("**Long syntax**")
+    puts("#{TOOL} install HelloWorld.0.1")
+    puts("#{TOOL} uninstall HelloWorld.0.1\n")
+    
+    puts("#{TOOL} install-confirm HelloWorld.0.1")
+    puts("#{TOOL} uninstall-confirm HelloWorld.0.1\n")
+    
+    puts("#{TOOL} generate-arm HelloWorld.0.1")
+    puts("#{TOOL} new-source HelloWorld.0.1\n\n\n")
+    
+    puts("---------------------------------------------------------\n\n\n")
+end

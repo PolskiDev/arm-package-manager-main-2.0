@@ -1,0 +1,8 @@
+#!/bin/python3
+
+import sys
+import os
+from tkinter import filedialog as fd
+
+Binary = fd.askopenfilename(filetypes=[("Microsoft Windows Binaries","*.exe"),("Microsoft Windows Installers","*.msi"),("All files","*.*")])
+os.system(f"wine \"{Binary}\"")

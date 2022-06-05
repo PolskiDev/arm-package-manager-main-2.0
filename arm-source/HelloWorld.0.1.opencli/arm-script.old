@@ -1,0 +1,57 @@
+#!/bin/python3
+# arm-pkg install HelloWorld.0.1.amd64.arm
+# arm-pkg -gen HelloWorld
+
+import os
+import sys
+
+__ARGS=sys.argv #Start at ARGS[1] => HelloWorld
+
+from ARM.SPEC import *
+
+def install():
+	os.system(f"cp -r {BINARY_PATH[1:]} {BINARY_PATH}")
+	os.system(f"cp {DESKTOP_SHORTCUT[1:]} {DESKTOP_SHORTCUT}")
+
+
+def ask_install():
+	print(f"\n\nThe architecture of your processor is: ", end="")
+	os.system("uname -m")
+
+
+	accept = input(f"\nDo you wish to install {PACKAGE} from {MAINTAINER} at version {VERSION} for {OS_NAME} ({ARCH})? [N/y]: ").lower()
+	print("\n\n")
+
+	if accept == "" or accept == "n":
+		exit()
+	else:
+		install()
+
+
+def uninstall():
+	os.system(f"rm -Rf {BINARY_PATH} && rm -Rf {DESKTOP_SHORTCUT}")
+
+def ask_uninstall():
+	confirm = input(f"\nDo you wish to uninstall {PACKAGE} and its data from the operating system? [N/y]: ").lower()
+	if confirm == "n" or confirm == "":
+		pass
+	else:
+		uninstall()
+
+
+
+if __ARGS[1] == "uninstall" or __ARGS[1] == "-u" or __ARGS[1] == "remove":
+	ask_uninstall()
+elif __ARGS[1] == "install" or __ARGS[1] == "-i":
+	ask_install()
+
+
+elif __ARGS[1] == "uninstall-confirm" or __ARGS[1] == "-uc":
+	uninstall()
+elif __ARGS[1] == "install-confirm" or __ARGS[1] == "-ic":
+	install()
+elif __ARGS[1] == None:
+	pass
+
+
+

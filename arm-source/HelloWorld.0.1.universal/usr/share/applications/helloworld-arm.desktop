@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Hello World (arm)
+Icon=/opt/helloworld_arm/helloworld.png
+Type=Application
+Categories=GNOME;GTK;Utility;TextEditor;
+Exec=/opt/helloworld_arm/helloworld.bin
+StartupNotify=false
+Terminal=false

@@ -1,0 +1,3 @@
+#!/bin/bash
+echo -e "\n\nThis is gonna be your ./configure file!\n\n"
+sleep 3
