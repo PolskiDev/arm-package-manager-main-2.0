@@ -23,7 +23,7 @@
 SOURCE_EXTENSION=".src"
 EXTENSION=".arm"
 ARM_PKG_EXTENSION=".src.arm"
-TOOL="arm-src"
+TOOL="sudo arm-src"
 
 if ARGV[0] == "-gen" or ARGV[0] == "generate-arm"
     system("tar -cvf #{ARGV[1]}#{ARM_PKG_EXTENSION} #{ARGV[1]}")
